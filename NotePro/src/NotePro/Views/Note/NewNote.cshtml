@@ -1,0 +1,50 @@
+@model NotePro.Models.Note
+
+<h1>Neue Notiz erstellen</h1>
+<form asp-controller="Note" asp-action="SubmitNote" method="post">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Importance" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Importance" class="form-control" />
+                <span asp-validation-for="Importance" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DueDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DueDate" class="form-control" />
+                <span asp-validation-for="DueDate" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Speichern" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<a asp-action="Cancel" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Abbrechen</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
