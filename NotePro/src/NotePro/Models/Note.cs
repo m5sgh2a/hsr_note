@@ -15,7 +15,7 @@ namespace NotePro.Models
         [StringLength(250, ErrorMessage = "Die Beschreibung darf nicht mehr als 250 Zeichen lang sein."), Display(Name = "Beschreibung")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage ="Bitte geben Sie eine Wichtigkeit an"), Range(0, 5), Display(Name = "Wichtigkeit")]
+        [Required(ErrorMessage ="Bitte geben Sie eine Wichtigkeit an"), Range(0, 5, ErrorMessage = "Bitte geben Sie eine Wichtigkeit zwischen 0 und 5 an"), Display(Name = "Wichtigkeit")]
         public int Importance { get; set; }
 
         [DataType(DataType.Date)]
