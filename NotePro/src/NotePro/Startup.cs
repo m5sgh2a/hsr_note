@@ -73,13 +73,13 @@ namespace NotePro
 
         private static void AddTestData(NoteProContext context)
         {
-            var author = new Author
+            var author = new AuthorNew
             {
                 FirstName = "Martin",
                 LastName = "Meier"
             };
 
-            context.Authors.Add(author);
+            context.AuthorsNew.Add(author);
 
             var note = new Note
             {

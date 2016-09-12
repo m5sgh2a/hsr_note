@@ -14,7 +14,8 @@ namespace NotePro.Data
 
         }
 
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<AuthorNew> AuthorsNew { get; set; }
+        public DbSet<AuthorLogin> AuthorsLogin { get; set; }
         public DbSet<Note> Notes { get; set; }
     }
 }

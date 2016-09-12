@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NotePro.Models;
 using NotePro.Data;
@@ -39,9 +35,15 @@ namespace NotePro.Controllers
         [HttpPost]
         public IActionResult SubmitNote(Note data)
         {
-            context.Add(data);
+            if (ModelState.IsValid)
+            {
+                context.Add(data);
+                context.SaveChanges();
 
-            return RedirectToAction("ManageNotes");
+                return RedirectToAction("ManageNotes");
+            }
+
+            return RedirectToAction("ErrorBadRequest", "Error");
         }
     }
 }
