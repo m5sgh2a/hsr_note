@@ -15,6 +15,7 @@ namespace NotePro
 {
     public class Startup
     {
+        //test
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
