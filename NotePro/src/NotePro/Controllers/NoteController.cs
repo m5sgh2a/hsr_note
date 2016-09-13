@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using NotePro.Models;
 using NotePro.Data;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace NotePro.Controllers
 {
     public class NoteController : Controller
     {
         private NoteProContext context;
+        private bool mShowFinished = false;
 
         public NoteController(NoteProContext context)
         {
@@ -24,7 +27,19 @@ namespace NotePro.Controllers
         {
             ViewData["Title"] = "Notizen Verwalten";
 
-            return View();
+
+            List<Note> tempList = null;
+            if(!mShowFinished)
+            {
+                tempList = context.Notes.Where(x => x.FinishDate == null).ToList();
+            }
+            else
+            {
+                tempList = context.Notes.Where(x => x.FinishDate != null).ToList();
+            }
+            NoteList list = new NoteList(tempList);
+
+            return View("ManageNotes", list);
         }
 
         public IActionResult Cancel()
@@ -44,6 +59,17 @@ namespace NotePro.Controllers
             }
 
             return RedirectToAction("ErrorBadRequest", "Error");
+        }
+
+        public IActionResult ShowFinished()
+        {
+            mShowFinished = !mShowFinished;
+            return RedirectToAction("ManageNotes"); //TODO
+        }
+
+        public IActionResult Edit(long noteId)
+        {
+            return View("NewNote");
         }
     }
 }
