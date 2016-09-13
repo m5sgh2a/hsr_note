@@ -84,14 +84,25 @@ namespace NotePro
 
             var note = new Note
             {
+                Id = 1,
                 Title = "Einkauf",
                 Description = "Milch einkaufen",
                 Importance = 1,
                 DueDate = new DateTime(2016, 9, 18),
                 AuthorId = author.Id
             };
+            var note2 = new Note
+            {
+                Id = 2,
+                Title = "Einkauf2",
+                Description = "Brot einkaufen",
+                Importance = 2,
+                DueDate = new DateTime(2016, 9, 18),
+                AuthorId = author.Id
+            };
 
             context.Notes.Add(note);
+            context.Notes.Add(note2);
             context.SaveChanges();
         }
     }
