@@ -67,9 +67,10 @@ namespace NotePro.Controllers
             return RedirectToAction("ManageNotes"); //TODO
         }
 
-        public IActionResult Edit(long noteId)
+        public IActionResult Edit(long id)
         {
-            return View("NewNote");
+            Note note = context.Notes.Where(x => x.Id == id).FirstOrDefault();
+            return View("NewNote", note);
         }
     }
 }
