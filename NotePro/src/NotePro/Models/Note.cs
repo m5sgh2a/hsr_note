@@ -7,7 +7,7 @@ namespace NotePro.Models
     public class Note
     {
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public long Id { get; set; } = -1;
 
         [Required(ErrorMessage ="Bitte geben Sie einen Titel ein"), StringLength(20, ErrorMessage = "Der Titel darf nicht mehr als 20 Zeichen lang sein."), Display(Name = "Titel")]
         public string Title { get; set; }

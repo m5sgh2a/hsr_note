@@ -4,6 +4,7 @@
 <form asp-controller="Note" asp-action="SubmitNote" method="post">
     <div class="form-horizontal">
         <hr />
+        @Html.HiddenFor(model => model.Id)
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>

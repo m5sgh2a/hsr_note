@@ -52,7 +52,15 @@ namespace NotePro.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Add(data);
+                if(data.Id >= 0)
+                {
+                    context.Update(data);
+                }
+                else
+                {
+                    data.Id = context.Notes.Last().Id + 1; //TODO: unsave
+                    context.Add(data);
+                }
                 context.SaveChanges();
 
                 return RedirectToAction("ManageNotes");
