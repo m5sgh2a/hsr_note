@@ -18,7 +18,7 @@ namespace NotePro.Controllers
 
         public IActionResult NewNote()
         {
-            ViewData["Title"] = "Neue Notiz";
+            ViewData["Title"] = "Neue Notiz erstellen";
 
             return View();
         }
@@ -72,12 +72,13 @@ namespace NotePro.Controllers
         public IActionResult ShowFinished()
         {
             mShowFinished = !mShowFinished;
-            return RedirectToAction("ManageNotes"); //TODO
+            return RedirectToAction("ManageNotes"); //TODO: redirect to previous page
         }
 
         public IActionResult Edit(long id)
         {
             Note note = context.Notes.Where(x => x.Id == id).FirstOrDefault();
+            ViewData["Title"] = "Notiz editieren";
             return View("NewNote", note);
         }
     }
