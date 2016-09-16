@@ -37,7 +37,7 @@ namespace NotePro
         {
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddMvc();
-            services.AddDbContext<NoteProContext>(opt => opt.UseInMemoryDatabase());
+            services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -52,7 +52,7 @@ namespace NotePro
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
 
-                var context = app.ApplicationServices.GetService<NoteProContext>();
+                var context = app.ApplicationServices.GetService<AppDbContext>();
                 AddTestData(context);
             }
             else
@@ -72,15 +72,15 @@ namespace NotePro
             });
         }
 
-        private static void AddTestData(NoteProContext context)
+        private static void AddTestData(AppDbContext context)
         {
-            var author = new AuthorNew
+            var author = new Register
             {
                 FirstName = "Martin",
                 LastName = "Meier"
             };
 
-            context.AuthorsNew.Add(author);
+            context.Register.Add(author);
 
             var note = new Note
             {

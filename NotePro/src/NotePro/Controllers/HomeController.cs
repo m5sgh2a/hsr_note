@@ -11,9 +11,9 @@ namespace NotePro.Controllers
 {
     public class HomeController : Controller
     {
-        private NoteProContext context;
+        private AppDbContext context;
 
-        public HomeController(NoteProContext context)
+        public HomeController(AppDbContext context)
         {
             this.context = context;
         }

@@ -8,10 +8,10 @@ namespace NotePro.Controllers
 {
     public class NoteController : Controller
     {
-        private NoteProContext context;
+        private AppDbContext context;
         private bool mShowFinished = false;
 
-        public NoteController(NoteProContext context)
+        public NoteController(AppDbContext context)
         {
             this.context = context;
         }
