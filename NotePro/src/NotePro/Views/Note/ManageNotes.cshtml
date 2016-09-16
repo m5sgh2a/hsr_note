@@ -1,8 +1,7 @@
 @model NotePro.Models.NoteList
 
-
 @{
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Notizen Verwalten</h2>
@@ -10,11 +9,30 @@
 <a asp-action="NewNote" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Neue Notiz erstellen</a>
 <a asp-action="SortByFinishDate" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Erledigungsdatum</a>
 <a asp-action="SortByCreateDate" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Erstelldatum</a>
-<a asp-action="SortByImportance" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Wichtigkeit</a>
-<a asp-action="ShowFinished" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Zeige erledigte</a>
+<a id="bImportance" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Wichtigkeit</a>
+<a id="showFinished" class="btn btn-success btn-lg"><i class="icon-ok"></i>Zeige erledigte</a>
 
-@foreach(var note in Model.GetList())
+@foreach (var note in Model.GetList())
 {
-    <div>@note.DueDate @note.Title <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a></div>
+    <div class="container" data-importance=@note.Importance data-fnished=@note.Finished>
+        <form asp-action="Checkbox" asp-controller="Note" asp-route-id =@note.Id class="checkbox" method="post">
+            <label><input type="checkbox" value=@note.Finished>@Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)</label>
+        </form>
+        
+        @note.DueDate @note.Title <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
+    </div>
 }
 
+@section scripts
+{
+    <script>
+        $("#bImportance").click(function () {
+            console.log("hit function");
+            $('.container').sort(function (a, b) {
+                return $(a).data('importance') - $(b).data('importance');
+            }).each(function (_, container) {
+                $(container).parent().append(container);
+            });
+        })
+    </script>
+}

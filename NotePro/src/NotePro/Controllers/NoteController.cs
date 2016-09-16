@@ -3,6 +3,7 @@ using NotePro.Models;
 using NotePro.Data;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace NotePro.Controllers
 {
@@ -80,6 +81,26 @@ namespace NotePro.Controllers
             Note note = context.Notes.Where(x => x.Id == id).FirstOrDefault();
             ViewData["Title"] = "Notiz editieren";
             return View("NewNote", note);
+        }
+
+        [HttpPost]
+        public IActionResult Checkbox(long id)
+        {
+            Note note = context.Notes.Where(x => x.Id == id).FirstOrDefault();
+            if(note.Finished == true)
+            {
+                note.Finished = false;
+                note.FinishDate = null;
+            }
+            else
+            {
+                note.Finished = true;
+                note.FinishDate = DateTime.Now;
+            }
+            context.Update(note);
+            context.SaveChanges();
+
+            return ManageNotes();
         }
     }
 }
