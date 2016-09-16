@@ -85,9 +85,9 @@ namespace NotePro
             var note = new Note
             {
                 Id = 1,
-                Title = "Einkauf",
+                Title = "Einkauf1",
                 Description = "Milch einkaufen",
-                Importance = 1,
+                Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
                 AuthorId = author.Id
             };
@@ -96,6 +96,15 @@ namespace NotePro
                 Id = 2,
                 Title = "Einkauf2",
                 Description = "Brot einkaufen",
+                Importance = 3,
+                DueDate = new DateTime(2016, 9, 18),
+                AuthorId = author.Id
+            };
+            var note3 = new Note
+            {
+                Id = 3,
+                Title = "Einkauf3",
+                Description = "Brot einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
                 AuthorId = author.Id
@@ -103,6 +112,7 @@ namespace NotePro
 
             context.Notes.Add(note);
             context.Notes.Add(note2);
+            context.Notes.Add(note3);
             context.SaveChanges();
         }
     }

@@ -25,6 +25,9 @@ namespace NotePro.Models
         [Range(typeof(DateTime), "1900/01/01", "3000/01/01"), Display(Name = "Erledigt am:")]
         public DateTime? FinishDate { get; set; }
 
+        [Display(Name = "Erledigt")]
+        public bool Finished { get; set; }
+
         public long AuthorId { get; set; }
     }
 }
