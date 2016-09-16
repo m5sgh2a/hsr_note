@@ -26,8 +26,17 @@
 @section scripts
 {
     <script>
+        $("#showFinished").click(function () {
+            if ($(this).attr("class") === "btn btn-success btn-lg") {
+                $(this).removeClass("btn btn-success btn-lg").addClass("btn btn-primary active");
+            }
+            else {
+
+                $(this).removeClass("btn btn-primary active").addClass("btn btn-success btn-lg");
+            }
+        })
+
         $("#bImportance").click(function () {
-            console.log("hit function");
             $('.container').sort(function (a, b) {
                 return $(a).data('importance') - $(b).data('importance');
             }).each(function (_, container) {
