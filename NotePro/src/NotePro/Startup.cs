@@ -89,7 +89,8 @@ namespace NotePro
                 Description = "Milch einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id
+                AuthorId = author.Id,
+                Finished = false
             };
             var note2 = new Note
             {
@@ -98,7 +99,8 @@ namespace NotePro
                 Description = "Brot einkaufen",
                 Importance = 3,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id
+                AuthorId = author.Id,
+                Finished = true
             };
             var note3 = new Note
             {
@@ -107,7 +109,8 @@ namespace NotePro
                 Description = "Brot einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id
+                AuthorId = author.Id,
+                Finished = true
             };
 
             context.Notes.Add(note);

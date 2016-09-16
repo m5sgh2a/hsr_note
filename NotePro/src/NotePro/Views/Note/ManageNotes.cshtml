@@ -12,27 +12,32 @@
 <a id="bImportance" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Wichtigkeit</a>
 <a id="showFinished" class="btn btn-success btn-lg"><i class="icon-ok"></i>Zeige erledigte</a>
 
-@foreach (var note in Model.GetList())
-{
-    <div class="container" data-importance=@note.Importance data-fnished=@note.Finished>
-        <form asp-action="Checkbox" asp-controller="Note" asp-route-id =@note.Id class="checkbox" method="post">
-            <label><input type="checkbox" value=@note.Finished>@Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)</label>
-        </form>
-        
-        @note.DueDate @note.Title <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
-    </div>
-}
+<div>
+    @foreach (var note in Model.GetList())
+    {
+        <div class="container" data-importance=@note.Importance data-finished=@note.Finished>
+            <form asp-action="Checkbox" asp-controller="Note" asp-route-id=@note.Id class="checkbox" method="post">
+                <label><input type="checkbox" value=@note.Finished>@Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)</label>
+            </form>
+
+            @note.DueDate @note.Title <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
+        </div>
+    }
+</div>
 
 @section scripts
 {
     <script>
+        var showFinished = false;
         $("#showFinished").click(function () {
             if ($(this).attr("class") === "btn btn-success btn-lg") {
                 $(this).removeClass("btn btn-success btn-lg").addClass("btn btn-primary active");
+                showFinished = true;
             }
             else {
 
                 $(this).removeClass("btn btn-primary active").addClass("btn btn-success btn-lg");
+                showFinished = false;
             }
         })
 
