@@ -3,24 +3,109 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section scripts
+{
+    <style type="text/css">
+        .container{
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        div{
+            flex: 1;
+            padding-top: 0.5em;
+        }
+        .left{
+            flex: 0 0 20%;
+        }
+        .content{
+            flex: 3  1 70%;
+        }
+        .right{
+            flex: 0 0 10%;
+        }
 
-<h2>Notizen Verwalten</h2>
+        .note{
+            padding-top: 2em;
+        }
+        .note{
+            padding-top: 2em;
+            background-color: aquamarine;
+        }
+        .top{
+            display: flex;
+            flex-flow:row;
+            flex:1 0 100%;
+        }
+        .top2{
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+        }
+        .sortButton{
+            flex: 1 1 20%;
+        }
+        .rithButton{
+            flex: 1 0 30%;
+            padding-left: 0.5em
+        }
 
-<a asp-action="NewNote" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Neue Notiz erstellen</a>
-<a> @Html.ActionLink("Sortiere nach Erledigungsdatum", "ManageNotes", new { sortOrder = "sortDueDate" }, new { @class = "btn btn-success btn-lg" })</a>
-<a> @Html.ActionLink("Sortiere nach Erstelldatum", "ManageNotes", new { sortOrder = "sortCreateDate" }, new { @class = "btn btn-success btn-lg" })</a>
-<a> @Html.ActionLink("Sortiere nach Wichtigkeit", "ManageNotes", new { sortOrder = "sortImportance" }, new { @class = "btn btn-success btn-lg" })</a>
-<a> @Html.ActionLink("Zeige erledigte", "ManageNotes", new { showFinished = @ViewBag.ShowFinished }, new {@class = "btn btn-success btn-lg" })</a>
+    </style>
+}
+<div class="top">
+    <h2>Notizen Verwalten</h2>
+</div>
 
+<div class="top">
+    <a asp-action="NewNote" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Neue Notiz erstellen</a>
+</div>
 <div>
-    @foreach (var note in Model.GetList())
+    <div class="top2">
+        <div class="sortButton">
+            @Html.ActionLink("Sortiere nach Erledigungsdatum", "ManageNotes", new { sortOrder = "sortDueDate" }, new { @class = "btn btn-success btn-lg" })
+        </div>
+        <div class="sortButton">
+            @Html.ActionLink("Sortiere nach Erstelldatum", "ManageNotes", new { sortOrder = "sortCreateDate" }, new { @class = "btn btn-success btn-lg" })
+        </div>
+        <div class="sortButton">
+            @Html.ActionLink("Sortiere nach Wichtigkeit", "ManageNotes", new { sortOrder = "sortImportance" }, new { @class = "btn btn-success btn-lg" })
+        </div>
+        <div class="rithButton">
+            @Html.ActionLink("Zeige erledigte", "ManageNotes", new { showFinished = @ViewBag.ShowFinished }, new { @class = "btn btn-success btn-lg" })
+        </div>
+    </div>
+</div>
+<div>
+    @for (int i = 0; i < Model.GetList().Count; i++)
     {
-        <div class="container">
-            <form asp-action="Checkbox" asp-controller="Note" asp-route-id=@note.Id class="checkbox" method="post">
-                <label><input type="checkbox" value=@note.Finished>@Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)</label>
-            </form>
-
-            @note.DueDate @note.Title @note.Importance <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
+        string color = "noteBlue";
+        if (i % 2 == 0)
+        {
+            color = "note";
+        }
+        <div class=@color>
+            <div class="container">
+                <div class="left"> @Model.GetList()[i].DueDate </div>
+                <div class="content"> @Model.GetList()[i].Title </div>
+                <div class="right">@Model.GetList()[i].Importance</div>
+            </div>
+            <div class="container">
+                <div class="left">
+                    <form asp-action="Checkbox" asp-controller="Note" asp-route-id=@Model.GetList()[i].Id class="checkbox" method="post">
+                        <label><input type="checkbox" value=@Model.GetList()[i].Finished>@Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)</label>
+                    </form>
+                </div>
+                <div class="content"> @Model.GetList()[i].Description </div>
+                <div class="right">
+                    <a asp-action="Edit" asp-controller="Note" asp-route-id=@Model.GetList()[i].Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
+                </div>
+            </div>
         </div>
     }
+    @if(Model.GetList().Count==0)
+    {
+        <div class="container">Keine Notizen vorhanden.</div>
+    }
 </div>
+
