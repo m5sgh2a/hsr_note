@@ -26,7 +26,7 @@ namespace NotePro.Models
         public DateTime? FinishDate { get; set; }
 
         [Display(Name = "Erledigt")]
-        public bool Finished { get; set; }
+        public bool Finished { get; set; } = false;
 
         
         public DateTime CreateDate { get; set; }

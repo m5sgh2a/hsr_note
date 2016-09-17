@@ -4,6 +4,7 @@ using NotePro.Data;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Net;
 
 namespace NotePro.Controllers
 {
@@ -96,24 +97,24 @@ namespace NotePro.Controllers
             return View("NewNote", note);
         }
 
-        //[HttpPost]
-        //public IActionResult Checkbox(long id)
-        //{
-        //    Note note = context.Notes.Where(x => x.Id == id).FirstOrDefault();
-        //    if(note.Finished == true)
-        //    {
-        //        note.Finished = false;
-        //        note.FinishDate = null;
-        //    }
-        //    else
-        //    {
-        //        note.Finished = true;
-        //        note.FinishDate = DateTime.Now;
-        //    }
-        //    context.Update(note);
-        //    context.SaveChanges();
+        [HttpPost]
+        public IActionResult Checkbox(long id, string showFinished, string sortParam)
+        {
+            Note note = context.Notes.Where(x => x.Id == id).FirstOrDefault();
+            if (note.Finished == true)
+            {
+                note.Finished = false;
+                note.FinishDate = null;
+            }
+            else
+            {
+                note.Finished = true;
+                note.FinishDate = DateTime.Now;
+            }
+            context.Update(note);
+            context.SaveChanges();
 
-        //    return ManageNotes();
-        //}
+            return ManageNotes(!Boolean.Parse(showFinished), sortParam);
+        }
     }
 }

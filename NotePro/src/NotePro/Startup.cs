@@ -100,6 +100,7 @@ namespace NotePro
                 Importance = 3,
                 DueDate = new DateTime(2016, 9, 18),
                 AuthorId = author.Id,
+                FinishDate = DateTime.Now,
                 Finished = true
             };
             var note3 = new Note
@@ -110,6 +111,7 @@ namespace NotePro
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
                 AuthorId = author.Id,
+                FinishDate = DateTime.Now,
                 Finished = true
             };
 
