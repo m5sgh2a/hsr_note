@@ -28,6 +28,9 @@ namespace NotePro.Models
         [Display(Name = "Erledigt")]
         public bool Finished { get; set; }
 
+        
+        public DateTime CreateDate { get; set; }
+
         public long AuthorId { get; set; }
     }
 }

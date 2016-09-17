@@ -7,46 +7,20 @@
 <h2>Notizen Verwalten</h2>
 
 <a asp-action="NewNote" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Neue Notiz erstellen</a>
-<a asp-action="SortByFinishDate" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Erledigungsdatum</a>
-<a asp-action="SortByCreateDate" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Erstelldatum</a>
-<a id="bImportance" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Wichtigkeit</a>
-<a id="showFinished" class="btn btn-success btn-lg"><i class="icon-ok"></i>Zeige erledigte</a>
+<a> @Html.ActionLink("Sortiere nach Erledigungsdatum", "ManageNotes", new { sortOrder = "sortDueDate" }, new { @class = "btn btn-success btn-lg" })</a>
+<a> @Html.ActionLink("Sortiere nach Erstelldatum", "ManageNotes", new { sortOrder = "sortCreateDate" }, new { @class = "btn btn-success btn-lg" })</a>
+<a> @Html.ActionLink("Sortiere nach Wichtigkeit", "ManageNotes", new { sortOrder = "sortImportance" }, new { @class = "btn btn-success btn-lg" })</a>
+<a> @Html.ActionLink("Zeige erledigte", "ManageNotes", new { showFinished = @ViewBag.ShowFinished }, new {@class = "btn btn-success btn-lg" })</a>
 
 <div>
     @foreach (var note in Model.GetList())
     {
-        <div class="container" data-importance=@note.Importance data-finished=@note.Finished>
+        <div class="container">
             <form asp-action="Checkbox" asp-controller="Note" asp-route-id=@note.Id class="checkbox" method="post">
                 <label><input type="checkbox" value=@note.Finished>@Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)</label>
             </form>
 
-            @note.DueDate @note.Title <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
+            @note.DueDate @note.Title @note.Importance <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
         </div>
     }
 </div>
-
-@section scripts
-{
-    <script>
-        var showFinished = false;
-        $("#showFinished").click(function () {
-            if ($(this).attr("class") === "btn btn-success btn-lg") {
-                $(this).removeClass("btn btn-success btn-lg").addClass("btn btn-primary active");
-                showFinished = true;
-            }
-            else {
-
-                $(this).removeClass("btn btn-primary active").addClass("btn btn-success btn-lg");
-                showFinished = false;
-            }
-        })
-
-        $("#bImportance").click(function () {
-            $('.container').sort(function (a, b) {
-                return $(a).data('importance') - $(b).data('importance');
-            }).each(function (_, container) {
-                $(container).parent().append(container);
-            });
-        })
-    </script>
-}
