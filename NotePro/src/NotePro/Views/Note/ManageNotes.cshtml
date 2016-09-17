@@ -85,7 +85,7 @@
 </div>
 
 <div class="top">
-    <a asp-action="NewNote" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Neue Notiz erstellen</a>
+    <a asp-action="NewNote" asp-controller="Note" class="btn btn-success"><i class="icon-ok"></i>Neue Notiz erstellen</a>
 </div>
 <div>
     <div class="top2">
@@ -113,14 +113,15 @@
         }
         <div class=@color>
             <div class="container">
-                @Html.HiddenFor(Model=>Model.GetList()[i].FinishDate)
+                @Html.HiddenFor(Model => Model.GetList()[i].FinishDate)
                 <div class="left"> @Model.GetList()[i].DueDate </div>
                 <div class="content"> @Model.GetList()[i].Title </div>
                 <div class="right">@Model.GetList()[i].Importance</div>
             </div>
             <div class="container">
                 <div class="left">
-                   @Html.CheckBoxFor(Model => Model.GetList()[i].Finished, new { id = Model.GetList()[i].Id, data_showfinished= ViewBag.ShowFinished, data_sortparam=ViewBag.SortParam, @class = "toggle", data_url = Url.Action("Checkbox", "Note") })
+                    @Html.CheckBoxFor(Model => Model.GetList()[i].Finished, new { id = Model.GetList()[i].Id, data_showfinished = ViewBag.ShowFinished, data_sortparam = ViewBag.SortParam, @class = "toggle", data_url = Url.Action("Checkbox", "Note") })
+                    @Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)
                 </div>
                 <div class="content" data-> @Model.GetList()[i].Description </div>
                 <div class="right">
