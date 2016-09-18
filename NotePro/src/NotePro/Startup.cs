@@ -85,6 +85,7 @@ namespace NotePro
             var note = new Note
             {
                 Id = 1,
+                CreateDate = DateTime.Now,
                 Title = "Einkauf1",
                 Description = "Milch einkaufen",
                 Importance = 2,
@@ -95,6 +96,7 @@ namespace NotePro
             var note2 = new Note
             {
                 Id = 2,
+                CreateDate = DateTime.Now,
                 Title = "Einkauf2",
                 Description = "Brot einkaufen",
                 Importance = 3,
@@ -106,6 +108,7 @@ namespace NotePro
             var note3 = new Note
             {
                 Id = 3,
+                CreateDate = DateTime.Now,
                 Title = "Einkauf3",
                 Description = "Brot einkaufen",
                 Importance = 2,

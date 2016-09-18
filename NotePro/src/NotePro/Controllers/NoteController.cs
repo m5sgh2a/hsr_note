@@ -85,6 +85,7 @@ namespace NotePro.Controllers
                 else
                 {
                     data.Id = context.Notes.OrderBy(x=>x.Id).Last().Id + 1;
+                    data.CreateDate = DateTime.Now;
                     context.Add(data);
                 }
                 context.SaveChanges();
