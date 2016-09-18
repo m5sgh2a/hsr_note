@@ -84,7 +84,7 @@ namespace NotePro.Controllers
                 }
                 else
                 {
-                    data.Id = context.Notes.Last().Id + 1; //TODO: unsave
+                    data.Id = context.Notes.OrderBy(x=>x.Id).Last().Id + 1;
                     context.Add(data);
                 }
                 context.SaveChanges();
