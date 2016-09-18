@@ -12,6 +12,8 @@ namespace NotePro.Controllers
     {
         private NoteProContext context;
         private bool mShowFinished = false;
+        private const string mActiveButton = "btn btn-success active";
+        private const string mButton = "btn btn-success";
 
         public NoteController(NoteProContext context)
         {
@@ -32,24 +34,33 @@ namespace NotePro.Controllers
             ViewBag.SortParam = String.IsNullOrEmpty(sortOrder) ? "sortDueDate" : "";
             ViewBag.ShowFinished = !showFinished;
             List<Note> tempList = null;
-            if(!showFinished)
+            ViewBag.ShowFinishedButton = mButton;
+            if (!showFinished)
             {
                 tempList = context.Notes.Where(x => x.FinishDate == null).ToList();
             }
             else
             {
                 tempList = context.Notes.Where(x => x.FinishDate != null).ToList();
+                ViewBag.ShowFinishedButton = mActiveButton;
             }
-            switch(sortOrder)
+
+            ViewBag.SortImportanceButton = mButton;
+            ViewBag.SortCreateDateButton = mButton;
+            ViewBag.SortDueDateButton = mButton;
+            switch (sortOrder)
             {
                 case ("sortImportance"):
                     tempList = tempList.OrderBy(x => x.Importance).ToList();
+                    ViewBag.SortImportanceButton = mActiveButton;
                     break;
                 case ("sortCreateDate"):
                     tempList = tempList.OrderBy(x => x.CreateDate).ToList();
+                    ViewBag.SortCreateDateButton = mActiveButton;
                     break;
                 default: //sortDueDate
                     tempList = tempList.OrderBy(x => x.DueDate).ToList();
+                    ViewBag.SortDueDateButton = mActiveButton;
                     break;
             }
             NoteList list = new NoteList(tempList);
