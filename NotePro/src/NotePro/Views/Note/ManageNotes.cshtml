@@ -38,6 +38,15 @@
             padding-top: 2em;
             background-color: aquamarine;
         }
+        
+        .top3{
+            display: flex; 
+            flex-flow: row;
+            flex: 0 0 100%;
+        }
+        hr{
+            width: 100%;
+        }
 
         .top {
             display: flex;
@@ -81,9 +90,8 @@
 </script>
 }
 
-<div class="top">
-    <h2>Notizen Verwalten</h2>
-</div>
+<h1>Notizen Verwalten</h1>
+<div class="top3"><hr></div>
 
 <div class="top">
     <a asp-action="NewNote" asp-controller="Note" class="btn btn-success"><i class="icon-ok"></i>Neue Notiz erstellen</a>
