@@ -37,6 +37,11 @@ namespace NotePro
         {
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddMvc();
+            services.AddCaching();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.CookieName = ".NotePro";
+            });
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase());
         }
 
@@ -63,6 +68,7 @@ namespace NotePro
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

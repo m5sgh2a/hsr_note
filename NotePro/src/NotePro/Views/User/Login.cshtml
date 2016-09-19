@@ -1,0 +1,50 @@
+﻿@model NotePro.Models.Login
+
+<div class="container">
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Anmelden</div>
+            </div>
+
+            <div style="padding-top:30px" class="panel-body">
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                <form asp-controller="User" asp-action="SubmitLogin" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input asp-for="Email" class="form-control" placeholder="E-Mail" />
+                        <span asp-validation-for="Email" class="text-danger" />
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input asp-for="Password" class="form-control" placeholder="Passwort" />
+                        <span asp-validation-for="Password" class="text-danger" />
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="form-group">
+                        <input type="submit" class="btn btn-info" value="Anmelden"><i class="icon-hand-right"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12 control">
+                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                                Wenn du keinen Account hast:
+                                <a asp-action="Register" asp-controller="User">
+                                    Hier registrieren
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

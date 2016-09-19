@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotePro.Models;
 using NotePro.Data;
+using Microsoft.AspNet.Http;
 
 namespace NotePro.Controllers
 {
