@@ -18,7 +18,7 @@ namespace NotePro.Models
         [Required(ErrorMessage ="Bitte geben Sie eine Wichtigkeit an"), Range(0, 5, ErrorMessage = "Bitte geben Sie eine Wichtigkeit zwischen 0 und 5 an"), Display(Name = "Wichtigkeit")]
         public int Importance { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Required(ErrorMessage ="Bitte geben Sie ein Erledigungsdatum ein"), Display(Name = "Erledigt bis:")]
         public DateTime DueDate { get; set; }
 
@@ -26,7 +26,10 @@ namespace NotePro.Models
         public DateTime? FinishDate { get; set; }
 
         [Display(Name = "Erledigt")]
-        public bool Finished { get; set; }
+        public bool Finished { get; set; } = false;
+
+        
+        public DateTime CreateDate { get; set; }
 
         public long AuthorId { get; set; }
     }

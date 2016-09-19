@@ -4,6 +4,7 @@ using NotePro.Data;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Net;
 
 namespace NotePro.Controllers
 {
@@ -11,6 +12,8 @@ namespace NotePro.Controllers
     {
         private AppDbContext context;
         private bool mShowFinished = false;
+        private const string mActiveButton = "btn btn-success active";
+        private const string mButton = "btn btn-success";
 
         public NoteController(AppDbContext context)
         {
@@ -24,19 +27,41 @@ namespace NotePro.Controllers
             return View();
         }
 
-        public IActionResult ManageNotes()
+        public IActionResult ManageNotes(bool showFinished, string sortOrder)
         {
             ViewData["Title"] = "Notizen Verwalten";
 
-
+            ViewBag.SortParam = String.IsNullOrEmpty(sortOrder) ? "sortDueDate" : "";
+            ViewBag.ShowFinished = !showFinished;
             List<Note> tempList = null;
-            if(!mShowFinished)
+            ViewBag.ShowFinishedButton = mButton;
+            if (!showFinished)
             {
                 tempList = context.Notes.Where(x => x.FinishDate == null).ToList();
             }
             else
             {
                 tempList = context.Notes.Where(x => x.FinishDate != null).ToList();
+                ViewBag.ShowFinishedButton = mActiveButton;
+            }
+
+            ViewBag.SortImportanceButton = mButton;
+            ViewBag.SortCreateDateButton = mButton;
+            ViewBag.SortDueDateButton = mButton;
+            switch (sortOrder)
+            {
+                case ("sortImportance"):
+                    tempList = tempList.OrderBy(x => x.Importance).ToList();
+                    ViewBag.SortImportanceButton = mActiveButton;
+                    break;
+                case ("sortCreateDate"):
+                    tempList = tempList.OrderBy(x => x.CreateDate).ToList();
+                    ViewBag.SortCreateDateButton = mActiveButton;
+                    break;
+                default: //sortDueDate
+                    tempList = tempList.OrderBy(x => x.DueDate).ToList();
+                    ViewBag.SortDueDateButton = mActiveButton;
+                    break;
             }
             NoteList list = new NoteList(tempList);
 
@@ -59,7 +84,8 @@ namespace NotePro.Controllers
                 }
                 else
                 {
-                    data.Id = context.Notes.Last().Id + 1; //TODO: unsave
+                    data.Id = context.Notes.OrderBy(x=>x.Id).Last().Id + 1;
+                    data.CreateDate = DateTime.Now;
                     context.Add(data);
                 }
                 context.SaveChanges();
@@ -84,10 +110,10 @@ namespace NotePro.Controllers
         }
 
         [HttpPost]
-        public IActionResult Checkbox(long id)
+        public IActionResult Checkbox(long id, string showFinished, string sortParam)
         {
             Note note = context.Notes.Where(x => x.Id == id).FirstOrDefault();
-            if(note.Finished == true)
+            if (note.Finished == true)
             {
                 note.Finished = false;
                 note.FinishDate = null;
@@ -100,7 +126,7 @@ namespace NotePro.Controllers
             context.Update(note);
             context.SaveChanges();
 
-            return ManageNotes();
+            return ManageNotes(!Boolean.Parse(showFinished), sortParam);
         }
     }
 }

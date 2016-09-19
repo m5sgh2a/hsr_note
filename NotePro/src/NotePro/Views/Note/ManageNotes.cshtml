@@ -3,45 +3,146 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Notizen Verwalten</h2>
-
-<a asp-action="NewNote" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Neue Notiz erstellen</a>
-<a asp-action="SortByFinishDate" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Erledigungsdatum</a>
-<a asp-action="SortByCreateDate" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Erstelldatum</a>
-<a id="bImportance" class="btn btn-success btn-lg"><i class="icon-ok"></i>Sortiere nach Wichtigkeit</a>
-<a id="showFinished" class="btn btn-success btn-lg"><i class="icon-ok"></i>Zeige erledigte</a>
-
-@foreach (var note in Model.GetList())
-{
-    <div class="container" data-importance=@note.Importance data-fnished=@note.Finished>
-        <form asp-action="Checkbox" asp-controller="Note" asp-route-id =@note.Id class="checkbox" method="post">
-            <label><input type="checkbox" value=@note.Finished>@Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)</label>
-        </form>
-        
-        @note.DueDate @note.Title <a asp-action="Edit" asp-controller="Note" asp-route-id=@note.Id class="btn btn-success btn-lg"><i class="icon-ok"></i>Edit</a>
-    </div>
-}
-
 @section scripts
 {
-    <script>
-        $("#showFinished").click(function () {
-            if ($(this).attr("class") === "btn btn-success btn-lg") {
-                $(this).removeClass("btn btn-success btn-lg").addClass("btn btn-primary active");
-            }
-            else {
+    <style type="text/css">
+        .container {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
 
-                $(this).removeClass("btn btn-primary active").addClass("btn btn-success btn-lg");
-            }
-        })
+        .div {
+            flex: 1 0 100%;
+            padding-top: 0.5em;
+        }
 
-        $("#bImportance").click(function () {
-            $('.container').sort(function (a, b) {
-                return $(a).data('importance') - $(b).data('importance');
-            }).each(function (_, container) {
-                $(container).parent().append(container);
+        .left {
+            flex: 0 0 20%;
+        }
+
+        .content {
+            flex: 3 1 70%;
+        }
+
+        .right {
+            flex: 0 0 10%;
+        }
+
+        .note {
+            padding-top: 2em;
+        }
+
+        .note {
+            padding-top: 2em;
+            background-color: aquamarine;
+        }
+        
+        .top3{
+            display: flex; 
+            flex-flow: row;
+            flex: 0 0 100%;
+        }
+        hr{
+            width: 100%;
+        }
+
+        .top {
+            display: flex;
+            flex-flow: row;
+            flex: 1 0 100%;
+        }
+
+        .top2 {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+        }
+
+        .sortButton {
+            flex: 0 1;
+        }
+
+        .rithButton {
+            flex: 0 1;
+            padding-left: 0.5em;
+        }
+    </style>
+
+<script>
+        $(function() {
+            $('.toggle').change(function() {
+                var self = $(this);
+                var url = self.data('url');
+                var id = self.attr('id');
+                var value = self.prop('checked');
+                var showFinished = self.data('showfinished');
+                var sortParam = self.data('sortparam');
+                $.ajax({
+                    url: url,
+                    data: { id: id, showFinished: showFinished, sortParam: sortParam },
+                    type: 'POST',
+                    success: function (response) { location.reload();}
+                });
             });
-        })
-    </script>
+        });
+</script>
 }
+
+<h1>Notizen Verwalten</h1>
+<div class="top3"><hr></div>
+
+<div class="top">
+    <a asp-action="NewNote" asp-controller="Note" class="btn btn-success"><i class="icon-ok"></i>Neue Notiz erstellen</a>
+</div>
+<div class="top">
+    <div class="top2">
+        <div class="sortButton">
+            @Html.ActionLink("Sortiere nach Erledigungsdatum", "ManageNotes", new { sortOrder = "sortDueDate" }, new { @class = ViewBag.SortDueDateButton })
+        </div>
+        <div class="sortButton">
+            @Html.ActionLink("Sortiere nach Erstelldatum", "ManageNotes", new { sortOrder = "sortCreateDate" }, new { @class = ViewBag.SortCreateDateButton })
+        </div>
+        <div class="sortButton">
+            @Html.ActionLink("Sortiere nach Wichtigkeit", "ManageNotes", new { sortOrder = "sortImportance" }, new { @class = ViewBag.SortImportanceButton })
+        </div>
+        <div class="rithButton">
+            @Html.ActionLink("Zeige erledigte", "ManageNotes", new { showFinished = @ViewBag.ShowFinished }, new { @class = ViewBag.ShowFinishedButton })
+        </div>
+    </div>
+</div>
+<div class="div">
+    @for (int i = 0; i < Model.GetList().Count; i++)
+    {
+        string color = "noteBlue";
+        if (i % 2 == 0)
+        {
+            color = "note";
+        }
+        <div class=@color>
+            <div class="container">
+                @Html.HiddenFor(Model => Model.GetList()[i].FinishDate)
+                <div class="left"> @Model.GetList()[i].DueDate </div>
+                <div class="content"> @Model.GetList()[i].Title </div>
+                <div class="right">@Model.GetList()[i].Importance</div>
+            </div>
+            <div class="container">
+                <div class="left">
+                    @Html.CheckBoxFor(Model => Model.GetList()[i].Finished, new { id = Model.GetList()[i].Id, data_showfinished = ViewBag.ShowFinished, data_sortparam = ViewBag.SortParam, @class = "toggle", data_url = Url.Action("Checkbox", "Note") })
+                    @Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)
+                </div>
+                <div class="content"> <textarea readonly style="width: 100%"> @Model.GetList()[i].Description</textarea> </div>
+                <div class="right">
+                    <a asp-action="Edit" asp-controller="Note" asp-route-id=@Model.GetList()[i].Id class="btn btn-success"><i class="icon-ok"></i>Edit</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.GetList().Count == 0)
+    {
+        <div class="container">Keine Notizen vorhanden.</div>
+    }
+</div>
+
+
