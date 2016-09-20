@@ -1,4 +1,4 @@
-@model NotePro.Models.NoteList
+@model List<NotePro.Models.Note> 
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -99,21 +99,21 @@
 <div class="top">
     <div class="top2">
         <div class="sortButton">
-            @Html.ActionLink("Sortiere nach Erledigungsdatum", "ManageNotes", new { sortOrder = "sortDueDate" }, new { @class = ViewBag.SortDueDateButton })
+            @Html.ActionLink("Sortiere nach Erledigungsdatum", "ManageNotes", new { sortOrder = "sortDueDate", showFinished = @ViewBag.ShowFinished }, new { @class = ViewBag.SortDueDateButton })
         </div>
         <div class="sortButton">
-            @Html.ActionLink("Sortiere nach Erstelldatum", "ManageNotes", new { sortOrder = "sortCreateDate" }, new { @class = ViewBag.SortCreateDateButton })
+            @Html.ActionLink("Sortiere nach Erstelldatum", "ManageNotes", new { sortOrder = "sortCreateDate", showFinished = @ViewBag.ShowFinished }, new { @class = ViewBag.SortCreateDateButton })
         </div>
         <div class="sortButton">
-            @Html.ActionLink("Sortiere nach Wichtigkeit", "ManageNotes", new { sortOrder = "sortImportance" }, new { @class = ViewBag.SortImportanceButton })
+            @Html.ActionLink("Sortiere nach Wichtigkeit", "ManageNotes", new { sortOrder = "sortImportance", showFinished = @ViewBag.ShowFinished }, new { @class = ViewBag.SortImportanceButton })
         </div>
         <div class="rithButton">
-            @Html.ActionLink("Zeige erledigte", "ManageNotes", new { showFinished = @ViewBag.ShowFinished }, new { @class = ViewBag.ShowFinishedButton })
+            @Html.ActionLink("Zeige erledigte", "ManageNotes", new { sortOrder = ViewBag.SortParam, showFinished = @ViewBag.ShowFinishedNext }, new { @class = ViewBag.ShowFinishedButton })
         </div>
     </div>
 </div>
 <div class="div">
-    @for (int i = 0; i < Model.GetList().Count; i++)
+    @for (int i = 0; i < Model.Count; i++)
     {
         string color = "noteBlue";
         if (i % 2 == 0)
@@ -122,24 +122,24 @@
         }
         <div class=@color>
             <div class="container">
-                @Html.HiddenFor(Model => Model.GetList()[i].FinishDate)
-                <div class="left"> @Model.GetList()[i].DueDate </div>
-                <div class="content"> @Model.GetList()[i].Title </div>
-                <div class="right">@Model.GetList()[i].Importance</div>
+                @Html.HiddenFor(Model => Model[i].FinishDate)
+                <div class="left"> @Model[i].DueDate </div>
+                <div class="content"> @Model[i].Title </div>
+                <div class="right">@Model[i].Importance</div>
             </div>
             <div class="container">
                 <div class="left">
-                    @Html.CheckBoxFor(Model => Model.GetList()[i].Finished, new { id = Model.GetList()[i].Id, data_showfinished = ViewBag.ShowFinished, data_sortparam = ViewBag.SortParam, @class = "toggle", data_url = Url.Action("Checkbox", "Note") })
-                    @Html.DisplayNameFor(Model => Model.GetList().FirstOrDefault().Finished)
+                    @Html.CheckBoxFor(Model => Model[i].Finished, new { id = Model[i].Id, data_showfinished = ViewBag.ShowFinished, data_sortparam = ViewBag.SortParam, @class = "toggle", data_url = Url.Action("Checkbox", "Note") })
+                    @Html.DisplayNameFor(Model => Model.FirstOrDefault().Finished)
                 </div>
-                <div class="content"> <textarea readonly style="width: 100%"> @Model.GetList()[i].Description</textarea> </div>
+                <div class="content"> <textarea readonly style="width: 100%"> @Model[i].Description</textarea> </div>
                 <div class="right">
-                    <a asp-action="Edit" asp-controller="Note" asp-route-id=@Model.GetList()[i].Id class="btn btn-success"><i class="icon-ok"></i>Edit</a>
+                    <a asp-action="Edit" asp-controller="Note" asp-route-id=@Model[i].Id class="btn btn-success"><i class="icon-ok"></i>Edit</a>
                 </div>
             </div>
         </div>
     }
-    @if (Model.GetList().Count == 0)
+    @if (Model.Count == 0)
     {
         <div class="container">Keine Notizen vorhanden.</div>
     }
