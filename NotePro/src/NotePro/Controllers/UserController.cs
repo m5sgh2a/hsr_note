@@ -46,7 +46,7 @@ namespace NotePro.Controllers
                 else
                 {
                     return RedirectToAction("Register", "User",
-                        new { duplicateRegistration = "<script>alert('Die eingegebene E-Mail existiert bereits. Bitte verwenden Sie eine andere E-Mail.');</script>;", model = register });
+                        new { duplicateRegistration = "<script>alert('Die eingegebene E-Mail existiert bereits. Bitte verwenden Sie eine andere E-Mail.')</script>", model = register });
                 }
             }
 
@@ -87,7 +87,7 @@ namespace NotePro.Controllers
                 else
                 {
                     return RedirectToAction("Login", "User",
-                        new { loginFailed = "<script>alert('Falsche E-Mail oder falsches Passwort');</script>;" });
+                        new { loginFailed = "<script>alert('Falsche E-Mail oder falsches Passwort')</script>" });
                 }
             }
 
