@@ -5,9 +5,11 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NotePro.Controllers
 {
+    [Authorize]
     public class NoteController : Controller
     {
         private AppDbContext context;

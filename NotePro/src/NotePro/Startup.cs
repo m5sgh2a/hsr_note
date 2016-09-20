@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NotePro.Models;
 using NotePro.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace NotePro
 {
     public class Startup
     {
-        //test
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -37,11 +34,6 @@ namespace NotePro
         {
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddMvc();
-            services.AddCaching();
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.CookieName = ".NotePro";
-            });
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase());
         }
 
@@ -68,7 +60,15 @@ namespace NotePro
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-            app.UseSession();
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "CookieAuth",
+                LoginPath = new PathString("/User/Login/"),
+                AccessDeniedPath = new PathString("/User/Login/"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseMvc(routes =>
             {
@@ -80,13 +80,15 @@ namespace NotePro
 
         private static void AddTestData(AppDbContext context)
         {
-            var author = new Register
+            var user = new Register
             {
                 FirstName = "Martin",
-                LastName = "Meier"
+                LastName = "Meier",
+                Email = "Martin.Meier@gmail.com",
+                Password = "123456",
             };
 
-            context.Register.Add(author);
+            context.Register.Add(user);
 
             var note = new Note
             {
@@ -96,7 +98,7 @@ namespace NotePro
                 Description = "Milch einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id,
+                AuthorId = user.Id,
                 Finished = false
             };
             var note2 = new Note
@@ -107,7 +109,7 @@ namespace NotePro
                 Description = "Brot einkaufen",
                 Importance = 3,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id,
+                AuthorId = user.Id,
                 FinishDate = DateTime.Now,
                 Finished = true
             };
@@ -119,7 +121,7 @@ namespace NotePro
                 Description = "Brot einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id,
+                AuthorId = user.Id,
                 FinishDate = DateTime.Now,
                 Finished = true
             };
@@ -127,6 +129,7 @@ namespace NotePro
             context.Notes.Add(note);
             context.Notes.Add(note2);
             context.Notes.Add(note3);
+
             context.SaveChanges();
         }
     }
