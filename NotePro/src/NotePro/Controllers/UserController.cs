@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NotePro.Data;
 using NotePro.Models;
 
 namespace NotePro.Controllers
 {
+    [AllowAnonymous]
     public class UserController : Controller
     {
         private readonly AppDbContext context;
@@ -48,17 +52,23 @@ namespace NotePro.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loginExist = context.Login
+                var user = context.Login
                     .Where(x => String.Compare(x.Email, model.Email, true) == 0
-                        && x.Password == model.Password).Count();
+                        && x.Password == model.Password).FirstOrDefault();
 
-                if (loginExist > 0)
+                if (user != null)
                 {
+                    List<Claim> userClaims = new List<Claim>()
+                    {
+                        new Claim("UserId", user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.Email),
+                        new Claim(ClaimTypes.Role, "user")
+                    };
+
+                    ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(userClaims, "local"));
+                    HttpContext.Authentication.SignInAsync("CookieAuth", principal);
+
                     return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("Login", "User");
                 }
             }
 

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NotePro.Models;
 using NotePro.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace NotePro
 {
     public class Startup
     {
-        //test
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -37,11 +34,6 @@ namespace NotePro
         {
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddMvc();
-            services.AddCaching();
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.CookieName = ".NotePro";
-            });
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase());
         }
 
@@ -68,7 +60,15 @@ namespace NotePro
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-            app.UseSession();
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "CookieAuth",
+                LoginPath = new PathString("/User/Login/"),
+                AccessDeniedPath = new PathString("/User/Login/"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseMvc(routes =>
             {
@@ -83,7 +83,9 @@ namespace NotePro
             var author = new Register
             {
                 FirstName = "Martin",
-                LastName = "Meier"
+                LastName = "Meier",
+                Email = "Martin.Meier@gmail.com",
+                Password = "123456"
             };
 
             context.Register.Add(author);
