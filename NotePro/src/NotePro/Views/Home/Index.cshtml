@@ -2,20 +2,26 @@
     <div class="row text-center">
         <div class="col-md-12">
             <br /><br />
-            <h1>
-                NotePro - Never forget anymore
-            </h1>
+            <h1>NotePro</h1>
+            <h3>Never forget anymore</h3>
             <br /><br />
         </div>
     </div>
 
+    <hr class="intro-divider">
     <div class="container">
-        <div class="row steps">
-            <div class="col-md-3">
-                <center><p><a asp-action="NewNote" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Neue Notiz erstellen</a></p></center>
-            </div>
-            <div class="col-md-3">
-                <center><p><a asp-action="ManageNotes" asp-controller="Note" class="btn btn-success btn-lg"><i class="icon-ok"></i>Notiz verwalten</a></p></center>
+        <div class="row-fluid">
+            <div class="col-lg-offset-2 text-center">
+                <p>
+                    <a asp-action="NewNote" asp-controller="Note" class="btn btn-lg btn-primary center-block">
+                        Neue Notiz erstellen<span class="glyphicon glyphicon-chevron-right" style="margin-left:10px"></span>
+                    </a>
+                </p>
+                <p>
+                    <a asp-action="ManageNotes" asp-controller="Note" class="btn btn-lg btn-primary center-block">
+                        Notiz verwalten<span class="glyphicon glyphicon-chevron-right" style="margin-left:10px"></span>
+                    </a>
+                </p>
             </div>
         </div>
     </div>
