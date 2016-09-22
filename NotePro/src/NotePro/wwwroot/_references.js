@@ -1,4 +1,5 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="js/bootstrap-datepicker.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/star-rating.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />

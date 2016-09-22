@@ -33,7 +33,7 @@
         <div class="form-group">
             <label asp-for="DueDate" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DueDate" type="datetime-local" class="form-control" />
+                <input asp-for="DueDate" id="DueDatePicker" type="text" class="form-control" readonly />
                 <span asp-validation-for="DueDate" class="text-danger" />
             </div>
         </div>
@@ -58,6 +58,14 @@
                 ratingValue = value;
                 //alert(ratingValue);
             });
+        });
+
+        $('#DueDatePicker').datepicker({
+            format: "dd.mm.yyyy",
+            language: "de",
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
         });
     </script>
 }
