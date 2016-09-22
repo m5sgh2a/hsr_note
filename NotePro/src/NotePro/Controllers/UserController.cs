@@ -20,16 +20,15 @@ namespace NotePro.Controllers
             this.context = context;
         }
 
-        public IActionResult Register(string duplicateRegistration, Register model)
+        public IActionResult Register()
         {
             ViewData["Title"] = "Register";
-            ViewData["Duplicate"] = duplicateRegistration;
 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult SubmitRegister(Register register)
+        public IActionResult Register(Register register)
         {
             if (ModelState.IsValid)
             {
@@ -45,24 +44,23 @@ namespace NotePro.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Register", "User",
-                        new { duplicateRegistration = "<script>alert('Die eingegebene E-Mail existiert bereits. Bitte verwenden Sie eine andere E-Mail.')</script>", model = register });
+                    ModelState.AddModelError("", "Die eingegebene E-Mail existiert bereits. Bitte verwenden Sie eine andere E-Mail.");
+                    return View();
                 }
             }
 
             return RedirectToAction("ErrorBadRequest", "Error");
         }
 
-        public IActionResult Login(string loginFailed)
+        public IActionResult Login()
         {
             ViewData["Title"] = "Login";
-            ViewData["LoginFailed"] = loginFailed;
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult SubmitLogin(Login model)
+        public IActionResult Login(Login model)
         {
             if (ModelState.IsValid)
             {
@@ -86,8 +84,8 @@ namespace NotePro.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "User",
-                        new { loginFailed = "<script>alert('Falsche E-Mail oder falsches Passwort')</script>" });
+                    ModelState.AddModelError("", "Falsche E-Mail oder falsches Passwort");
+                    return View();
                 }
             }
 

@@ -21,7 +21,7 @@ namespace NotePro.Models
 
         [Display(Name = "Wichtigkeit")]
         [HiddenInput(DisplayValue = false)]
-        public int Importance { get; set; } = 1;
+        public int Importance { get; set; }
 
         [DataType(DataType.DateTime)]
         [Required(ErrorMessage ="Bitte geben Sie ein Erledigungsdatum ein")]
@@ -33,7 +33,7 @@ namespace NotePro.Models
         public DateTime? FinishDate { get; set; }
 
         [Display(Name = "Erledigt")]
-        public bool Finished { get; set; } = false;
+        public bool Finished { get; set; }
 
         
         public DateTime CreateDate { get; set; }

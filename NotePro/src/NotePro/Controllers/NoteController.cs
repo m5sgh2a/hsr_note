@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using NotePro.Services;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace NotePro.Controllers
 {
@@ -73,7 +74,9 @@ namespace NotePro.Controllers
         [HttpPost]
         public IActionResult SubmitNote(Note data)
         {
-            if (ModelState.IsValid)
+            if (ModelState["Title"].ValidationState == ModelValidationState.Valid
+                || ModelState["Description"].ValidationState == ModelValidationState.Valid
+                | ModelState["DueDate"].ValidationState == ModelValidationState.Valid)
             {
                 mNoteService.UpdateNote(data);
 

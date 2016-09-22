@@ -8,7 +8,6 @@
         @Html.HiddenFor(model => model.CreateDate)
         @Html.HiddenFor(model => model.FinishDate)
         @Html.HiddenFor(model => model.Finished)
-        @Html.HiddenFor(model => model.Importance)
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>
@@ -27,7 +26,7 @@
         <div class="form-group">
             <label asp-for="Importance" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Importance" id="input-21d" value="1" type="number" class="rating" min=0 max=5 step=1 data-size="sm">
+                <input id="input-21d" name="Importance" value="1" type="number" class="rating" min=1 max=5 step=1 data-size="sm">
             </div>
         </div>
         <div class="form-group">
@@ -56,7 +55,6 @@
 
                 var ratingValue = $('#Importance').val();
                 ratingValue = value;
-                //alert(ratingValue);
             });
         });
 
