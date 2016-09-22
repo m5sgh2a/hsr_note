@@ -16,14 +16,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email" class="col-md-3 control-label">E-Mail</label>
-                        <div class="col-md-9">
-                            <input asp-for="Email" class="form-control" placeholder="E-Mail">
-                            <span asp-validation-for="Email" class="text-danger" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="firstname" class="col-md-3 control-label">Vorname</label>
                         <div class="col-md-9">
                             <input asp-for="FirstName" type="text" class="form-control" placeholder="Vorname">
@@ -35,6 +27,13 @@
                         <div class="col-md-9">
                             <input asp-for="LastName" type="text" class="form-control" placeholder="Nachname">
                             <span asp-validation-for="LastName" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-md-3 control-label">E-Mail</label>
+                        <div class="col-md-9">
+                            <input asp-for="Email" class="form-control" placeholder="E-Mail">
+                            <span asp-validation-for="Email" class="text-danger" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -54,6 +53,10 @@
             </div>
         </div>
     </div>
+</div>
+
+<div>
+   @Html.Raw(ViewData["Duplicate"])
 </div>
 
 @section Scripts {

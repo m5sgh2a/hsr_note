@@ -45,6 +45,10 @@
     </div>
 </div>
 
+<div>
+    @Html.Raw(ViewData["LoginFailed"])
+</div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

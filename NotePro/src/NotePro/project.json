@@ -1,24 +1,29 @@
 {
   "dependencies": {
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
+    "Microsoft.AspNet.Http.Features": "1.0.0-rc1-final",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
-    "Microsoft.AspNetCore.Mvc": "1.0.1",
+    "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Razor.Tools": {
-        "version": "1.0.0-preview2-final",
-        "type": "build"
+      "version": "1.0.0-preview2-final",
+      "type": "build"
     },
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+    "Microsoft.AspNetCore.Session": "1.0.0-rc2-final",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
-    "Microsoft.EntityFrameworkCore.InMemory": "1.0.1",
+    "Microsoft.EntityFrameworkCore.InMemory": "1.0.0",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
     "Microsoft.Extensions.Logging": "1.0.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-    "Microsoft.NETCore.App": "1.0.1",
+    "Microsoft.NETCore.App": {
+      "version": "1.0.0",
+      "type": "platform"
+    },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
       "version": "1.0.0-preview2-final",
@@ -31,12 +36,13 @@
   },
 
   "tools": {
-    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview1-final",
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview1-final",
+    "BundlerMinifier.Core": "2.0.238",
+    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final",
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
-      "version": "1.0.0-preview1-final",
+      "version": "1.0.0-preview2-final",
       "imports": [
-        "portable-net45+win7+dnxcore50"
+        "portable-net45+win8"
       ]
     }
 
@@ -46,7 +52,7 @@
     "netcoreapp1.0": {
       "imports": [
         "dotnet5.6",
-        "portable-net45+win7"
+        "portable-net45+win8"
       ]
     }
   },

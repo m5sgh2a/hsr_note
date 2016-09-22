@@ -80,15 +80,15 @@ namespace NotePro
 
         private static void AddTestData(AppDbContext context)
         {
-            var user = new Register
+            var author = new Register
             {
                 FirstName = "Martin",
                 LastName = "Meier",
                 Email = "Martin.Meier@gmail.com",
-                Password = "123456",
+                Password = "123456"
             };
 
-            context.Register.Add(user);
+            context.Register.Add(author);
 
             var note = new Note
             {
@@ -98,7 +98,7 @@ namespace NotePro
                 Description = "Milch einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = user.Id,
+                AuthorId = author.Id,
                 Finished = false
             };
             var note2 = new Note
@@ -109,7 +109,7 @@ namespace NotePro
                 Description = "Brot einkaufen",
                 Importance = 3,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = user.Id,
+                AuthorId = author.Id,
                 FinishDate = DateTime.Now,
                 Finished = true
             };
@@ -121,7 +121,7 @@ namespace NotePro
                 Description = "Brot einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = user.Id,
+                AuthorId = author.Id,
                 FinishDate = DateTime.Now,
                 Finished = true
             };
@@ -129,7 +129,6 @@ namespace NotePro
             context.Notes.Add(note);
             context.Notes.Add(note2);
             context.Notes.Add(note3);
-
             context.SaveChanges();
         }
     }

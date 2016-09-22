@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NotePro.Data;
 using NotePro.Models;
-using System.Security.Claims;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
 
 namespace NotePro.Controllers
 {
@@ -19,30 +20,43 @@ namespace NotePro.Controllers
             this.context = context;
         }
 
-        public IActionResult Register()
+        public IActionResult Register(string duplicateRegistration, Register model)
         {
             ViewData["Title"] = "Register";
+            ViewData["Duplicate"] = duplicateRegistration;
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult SubmitRegister(Register model)
+        public IActionResult SubmitRegister(Register register)
         {
             if (ModelState.IsValid)
             {
-                context.Add(model);
-                context.SaveChanges();
+                var user = context.Login
+                    .Where(x => String.Compare(x.Email, register.Email, true) == 0).FirstOrDefault();
 
-                return RedirectToAction("Login", "User");
+                if (user == null)
+                {
+                    context.Add(register);
+                    context.SaveChanges();
+
+                    return RedirectToAction("Login", "User");
+                }
+                else
+                {
+                    return RedirectToAction("Register", "User",
+                        new { duplicateRegistration = "<script>alert('Die eingegebene E-Mail existiert bereits. Bitte verwenden Sie eine andere E-Mail.')</script>", model = register });
+                }
             }
 
             return RedirectToAction("ErrorBadRequest", "Error");
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string loginFailed)
         {
             ViewData["Title"] = "Login";
+            ViewData["LoginFailed"] = loginFailed;
 
             return View();
         }
@@ -52,16 +66,16 @@ namespace NotePro.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loginIsCorrect = context.Login
+                var user = context.Login
                     .Where(x => String.Compare(x.Email, model.Email, true) == 0
                         && x.Password == model.Password).FirstOrDefault();
 
-                if (loginIsCorrect != null)
+                if (user != null)
                 {
                     List<Claim> userClaims = new List<Claim>()
                     {
-                        new Claim("UserId", loginIsCorrect.Id.ToString()),
-                        new Claim(ClaimTypes.Name, loginIsCorrect.Email),
+                        new Claim("UserId", user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.Email),
                         new Claim(ClaimTypes.Role, "user")
                     };
 
@@ -72,7 +86,8 @@ namespace NotePro.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "User");
+                    return RedirectToAction("Login", "User",
+                        new { loginFailed = "<script>alert('Falsche E-Mail oder falsches Passwort')</script>" });
                 }
             }
 
