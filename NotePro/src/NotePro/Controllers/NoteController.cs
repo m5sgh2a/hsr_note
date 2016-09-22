@@ -72,13 +72,13 @@ namespace NotePro.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitNote(Note data)
+        public IActionResult SubmitNote(Note note)
         {
             if (ModelState["Title"].ValidationState == ModelValidationState.Valid
                 || ModelState["Description"].ValidationState == ModelValidationState.Valid
                 | ModelState["DueDate"].ValidationState == ModelValidationState.Valid)
             {
-                mNoteService.UpdateNote(data);
+                mNoteService.UpdateNote(note);
 
                 return RedirectToAction("ManageNotes");
             }
