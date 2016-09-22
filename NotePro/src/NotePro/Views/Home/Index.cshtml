@@ -9,20 +9,16 @@
     </div>
 
     <hr class="intro-divider">
-    <div class="container">
-        <div class="row-fluid">
-            <div class="col-lg-offset-2 text-center">
-                <p>
-                    <a asp-action="NewNote" asp-controller="Note" class="btn btn-lg btn-primary center-block">
-                        Neue Notiz erstellen<span class="glyphicon glyphicon-chevron-right" style="margin-left:10px"></span>
-                    </a>
-                </p>
-                <p>
-                    <a asp-action="ManageNotes" asp-controller="Note" class="btn btn-lg btn-primary center-block">
-                        Notiz verwalten<span class="glyphicon glyphicon-chevron-right" style="margin-left:10px"></span>
-                    </a>
-                </p>
-            </div>
+    <div class="center-block" style="padding: 40px">
+        <div style="margin-bottom: 20px">
+            <a asp-action="NewNote" asp-controller="Note" class="btn btn-lg btn-default btn-block">
+                Neue Notiz erstellen<span class="glyphicon glyphicon-chevron-right" style="margin-left:10px"></span>
+            </a>
+        </div>
+        <div>
+            <a asp-action="ManageNotes" asp-controller="Note" class="btn btn-lg btn-default btn-block">
+                Notiz verwalten<span class="glyphicon glyphicon-chevron-right" style="margin-left:10px"></span>
+            </a>
         </div>
     </div>
 </div>

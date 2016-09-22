@@ -8,6 +8,7 @@
         @Html.HiddenFor(model => model.CreateDate)
         @Html.HiddenFor(model => model.FinishDate)
         @Html.HiddenFor(model => model.Finished)
+        @Html.HiddenFor(model => model.Importance)
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>
@@ -26,8 +27,7 @@
         <div class="form-group">
             <label asp-for="Importance" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Importance" class="form-control" />
-                <span asp-validation-for="Importance" class="text-danger" />
+                <input asp-for="Importance" id="input-21d" value="1" type="number" class="rating" min=0 max=5 step=1 data-size="sm">
             </div>
         </div>
         <div class="form-group">
@@ -40,14 +40,24 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Speichern" class="btn btn-default" />
+                <input type="submit" value="Speichern" class="btn btn-default" style="margin-right: 10px" />
+                <a href='javascript:history.go(-1)' class="btn btn-danger">Abbrechen</a>
             </div>
         </div>
     </div>
 </form>
 
-<a asp-action="Cancel" asp-controller="Note" class="btn btn-success"><i class="icon-ok"></i>Abbrechen</a>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $("#input-21d").on("rating.change", function (event, value, caption) {
+
+                var ratingValue = $('#Importance').val();
+                ratingValue = value;
+                //alert(ratingValue);
+            });
+        });
+    </script>
 }

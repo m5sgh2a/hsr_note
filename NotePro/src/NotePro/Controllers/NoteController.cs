@@ -13,8 +13,8 @@ namespace NotePro.Controllers
     public class NoteController : Controller
     {
         private AppDbContext context;
-        private const string mActiveButton = "btn btn-success active";
-        private const string mButton = "btn btn-success";
+        private const string mActiveButton = "btn btn-default active";
+        private const string mButton = "btn btn-default";
         private readonly INoteService mNoteService;
 
         public NoteController(AppDbContext context, INoteService noteService)
@@ -68,11 +68,6 @@ namespace NotePro.Controllers
 
             List<Note> noteList = mNoteService.GetSortedNoteList(sortOrder, showFinished, 1); //Todo: author i
             return View("ManageNotes", noteList);
-        }
-
-        public IActionResult Cancel()
-        {
-            return RedirectToAction("Index",""); //TODO: go back where you come from
         }
 
         [HttpPost]
