@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using NotePro.Models;
 using NotePro.Data;
 using Microsoft.AspNetCore.Http;
+using NotePro.Services;
 
 namespace NotePro
 {
@@ -35,6 +36,7 @@ namespace NotePro
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddMvc();
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase());
+            services.AddTransient<INoteService, NoteService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
