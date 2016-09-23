@@ -32,8 +32,11 @@
         <div class="form-group">
             <label asp-for="DueDate" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DueDate" id="DueDatePicker" type="text" class="form-control" readonly />
-                <span asp-validation-for="DueDate" class="text-danger" />
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    <input asp-for="DueDate" id="DueDatePicker" type="text" class="form-control" readonly style="max-width: 120px" />
+                    <span asp-validation-for="DueDate" class="text-danger" />
+                </div>
             </div>
         </div>
 
@@ -58,7 +61,7 @@
             });
         });
 
-        $('#DueDatePicker').datepicker({
+        $('.input-group.date').datepicker({
             format: "dd.mm.yyyy",
             language: "de",
             calendarWeeks: true,

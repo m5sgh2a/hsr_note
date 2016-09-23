@@ -9,6 +9,8 @@ using NotePro.Models;
 using NotePro.Data;
 using Microsoft.AspNetCore.Http;
 using NotePro.Services;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace NotePro
 {
@@ -53,6 +55,7 @@ namespace NotePro
 
                 var context = app.ApplicationServices.GetService<AppDbContext>();
                 AddTestData(context);
+
             }
             else
             {
@@ -94,19 +97,14 @@ namespace NotePro
 
             var note = new Note
             {
-                Id = 1,
-                CreateDate = DateTime.Now,
                 Title = "Einkauf1",
                 Description = "Milch einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id,
-                Finished = false
+                AuthorId = author.Id
             };
             var note2 = new Note
             {
-                Id = 2,
-                CreateDate = DateTime.Now,
                 Title = "Einkauf2",
                 Description = "Brot einkaufen",
                 Importance = 3,
@@ -117,8 +115,6 @@ namespace NotePro
             };
             var note3 = new Note
             {
-                Id = 3,
-                CreateDate = DateTime.Now,
                 Title = "Einkauf3",
                 Description = "Brot einkaufen",
                 Importance = 2,

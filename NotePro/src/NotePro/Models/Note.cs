@@ -7,8 +7,10 @@ namespace NotePro.Models
 {
     public class Note
     {
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; } = -1;
+        [Required]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
 
         [Required(ErrorMessage ="Bitte geben Sie einen Titel ein")]
         [StringLength(20, ErrorMessage = "Der Titel darf nicht mehr als 20 Zeichen lang sein.")]
@@ -25,11 +27,11 @@ namespace NotePro.Models
 
         [DataType(DataType.DateTime)]
         [Required(ErrorMessage ="Bitte geben Sie ein Erledigungsdatum ein")]
-        [Display(Name = "Erledigt bis:")]
+        [Display(Name = "Erledigt bis")]
         public DateTime DueDate { get; set; }
 
         [Range(typeof(DateTime), "1900/01/01", "3000/01/01")]
-        [Display(Name = "Erledigt am:")]
+        [Display(Name = "Erledigt am")]
         public DateTime? FinishDate { get; set; }
 
         [Display(Name = "Erledigt")]

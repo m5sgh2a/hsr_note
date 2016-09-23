@@ -7,6 +7,7 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using NotePro.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 
 namespace NotePro.Controllers
 {
@@ -76,9 +77,10 @@ namespace NotePro.Controllers
         {
             if (ModelState["Title"].ValidationState == ModelValidationState.Valid
                 || ModelState["Description"].ValidationState == ModelValidationState.Valid
-                | ModelState["DueDate"].ValidationState == ModelValidationState.Valid)
+                || ModelState["DueDate"].ValidationState == ModelValidationState.Valid)
             {
-                mNoteService.UpdateNote(note);
+                note.AuthorId = GetCurrentUserId();
+                mNoteService.SaveNote(note);
 
                 return RedirectToAction("ManageNotes");
             }
@@ -99,6 +101,14 @@ namespace NotePro.Controllers
             mNoteService.ChangeFinishedState(id);
 
             return ManageNotes(!Boolean.Parse(showFinished), sortParam);
+        }
+
+        private int GetCurrentUserId()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+
+            return Convert.ToInt32(claims.Where(x => x.Type == "UserId").Select(x => x.Value).FirstOrDefault());
         }
     }
 }

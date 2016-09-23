@@ -11,10 +11,16 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="dropdown" id="note-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i>Notiz<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a asp-area="" asp-controller="Note" asp-action="NewNote">Neu</a></li>
+                        <li><a asp-area="" asp-controller="Note" asp-action="ManageNotes">Verwalten</a></li>
+                    </ul>
+                </li>
                 <li><a asp-area="" asp-controller="Home" asp-action="About">Über</a></li>
                 <li class="dropdown" id="theme-dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> Theme<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i>Theme<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" class="change-style-menu-item" rel="spacelab"><i class="icon-fixed-width icon-pencil"></i> Spacelab (Default)</a></li>
                         <li><a href="#" class="change-style-menu-item" rel="flatly"><i class="icon-fixed-width icon-pencil"></i> Flatly</a></li>

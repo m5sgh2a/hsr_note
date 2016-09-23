@@ -10,7 +10,7 @@ namespace NotePro.Services
     {
         List<Note> GetSortedNoteList(string sortOrder, bool showFinished, long authorId);
 
-        void UpdateNote(Note note);
+        void SaveNote(Note note);
 
         void ChangeFinishedState(long id);
 

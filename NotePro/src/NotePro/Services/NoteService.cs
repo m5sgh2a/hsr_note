@@ -43,22 +43,18 @@ namespace NotePro.Services
             return noteList;
         }
 
-        public void UpdateNote(Note note)
+        public void SaveNote(Note note)
         {
-            if (note.Id >= 0)
+            if (note.Id == 0)
             {
-                mContext.Update(note);
-            }
-            else if(mContext.Notes.Where(x=>x.Id==note.Id).ToList().Count==0)
-            {
-                //TODO: throw 404 error
-            }
-            else
-            {
-                note.Id = mContext.Notes.OrderBy(x => x.Id).Last().Id + 1;
                 note.CreateDate = DateTime.Now;
                 mContext.Add(note);
             }
+            else
+            {
+                mContext.Update(note);
+            }
+
             mContext.SaveChanges();
         }
 
