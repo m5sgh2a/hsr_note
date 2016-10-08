@@ -25,7 +25,7 @@ namespace NotePro.Models
         [HiddenInput(DisplayValue = false)]
         public int Importance { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [Required(ErrorMessage ="Bitte geben Sie ein Erledigungsdatum ein")]
         [Display(Name = "Erledigt bis")]
         public DateTime DueDate { get; set; }

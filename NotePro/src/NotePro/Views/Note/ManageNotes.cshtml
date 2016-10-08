@@ -29,15 +29,6 @@
         .right {
             flex: 0 0 10%;
         }
-
-        .note {
-            padding-top: 2em;
-        }
-
-        .note {
-            padding-top: 2em;
-            background-color: aquamarine;
-        }
         
         .top3{
             display: flex; 
@@ -115,17 +106,12 @@
 <div class="div">
     @for (int i = 0; i < Model.Count; i++)
     {
-        string color = "noteBlue";
-        if (i % 2 == 0)
-        {
-            color = "note";
-        }
-        <div class=@color>
+        <div class=well>
             <div class="container">
                 @Html.HiddenFor(Model => Model[i].FinishDate)
-                <div class="left"> @Model[i].DueDate </div>
+                <div class="left"> @String.Format("{0:d/M/yyyy}", Model[i].DueDate) </div>
                 <div class="content"> @Model[i].Title </div>
-                <div class="right">@Model[i].Importance</div>
+                <div class="right" > @Model[i].Importance </div>
             </div>
             <div class="container">
                 <div class="left">
