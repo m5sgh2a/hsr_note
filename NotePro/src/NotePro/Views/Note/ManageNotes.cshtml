@@ -118,7 +118,7 @@
                     @Html.CheckBoxFor(Model => Model[i].Finished, new { id = Model[i].Id, data_showfinished = ViewBag.ShowFinished, data_sortparam = ViewBag.SortParam, @class = "toggle", data_url = Url.Action("Checkbox", "Note") })
                     @Html.DisplayNameFor(Model => Model.FirstOrDefault().Finished)
                 </div>
-                <div class="content"> <textarea readonly style="width: 100%"> @Model[i].Description</textarea> </div>
+                <div class="content"> <textarea rows="4" style="width: 100%"> @Model[i].Description</textarea> </div>
                 <div class="right">
                     <a asp-action="Edit" asp-controller="Note" asp-route-id=@Model[i].Id class="btn btn-success"><i class="icon-ok"></i>Edit</a>
                 </div>
