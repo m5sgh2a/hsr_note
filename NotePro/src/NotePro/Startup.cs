@@ -101,27 +101,30 @@ namespace NotePro
                 Description = "Milch einkaufen",
                 Importance = 2,
                 DueDate = new DateTime(2016, 9, 18),
-                AuthorId = author.Id
+                AuthorId = author.Id,
+                CreateDate = new DateTime(2016, 8, 18)
             };
             var note2 = new Note
             {
                 Title = "Einkauf2",
                 Description = "Brot einkaufen",
                 Importance = 3,
-                DueDate = new DateTime(2016, 9, 18),
+                DueDate = new DateTime(2016, 9, 19),
                 AuthorId = author.Id,
-                FinishDate = DateTime.Now,
-                Finished = true
+                FinishDate = new DateTime(2016, 9, 19),
+                Finished = true,
+                CreateDate = new DateTime(2016, 8, 17)
             };
             var note3 = new Note
             {
                 Title = "Einkauf3",
                 Description = "Brot einkaufen",
-                Importance = 2,
-                DueDate = new DateTime(2016, 9, 18),
+                Importance = 1,
+                DueDate = new DateTime(2016, 9, 20),
                 AuthorId = author.Id,
-                FinishDate = DateTime.Now,
-                Finished = true
+                FinishDate = new DateTime(2016, 9, 18),
+                Finished = true,
+                CreateDate = new DateTime(2016, 8, 20)
             };
 
             context.Notes.Add(note);
