@@ -27,7 +27,7 @@
         }
 
         .right {
-            flex: 0 0 75px;
+            flex: 1 0 200px;
         }
         
         .top3{
@@ -111,7 +111,7 @@
                 @Html.HiddenFor(Model => Model[i].FinishDate)
                 <div class="left"> @String.Format("{0:d/M/yyyy}", Model[i].DueDate) </div>
                 <div class="content"> @Model[i].Title </div>
-                <div class="right" > @Model[i].Importance </div>
+                <div class="right" > <input id="input-21d" name="Importance" value=@Model[i].Importance type="number" class="rating" min=0 max=5 step=1 data-size="xs" readonly > </div>
             </div>
             <div class="container">
                 <div class="left">
