@@ -68,7 +68,8 @@ namespace NotePro.Controllers
                     break;
             }
 
-            List<Note> noteList = mNoteService.GetSortedNoteList(sortOrder, showFinished, 1); //Todo: author i
+            int currentUser = GetCurrentUserId();
+            List<Note> noteList = mNoteService.GetSortedNoteList(sortOrder, showFinished, currentUser);
             return View("ManageNotes", noteList);
         }
 
@@ -90,17 +91,31 @@ namespace NotePro.Controllers
 
         public IActionResult Edit(long id)
         {
-            Note note = mNoteService.GetNote(id);
-            ViewData["Title"] = "Notiz editieren";
-            return View("NewNote", note);
+            try
+            {
+                Note note = mNoteService.GetNote(id);
+                ViewData["Title"] = "Notiz editieren";
+                return View("NewNote", note);
+            }
+            catch
+            {
+                return RedirectToAction("ErrorBadRequest", "Error");
+            }
         }
 
         [HttpPost]
         public IActionResult Checkbox(long id, string showFinished, string sortParam)
         {
-            mNoteService.ChangeFinishedState(id);
+            try
+            {
+                mNoteService.ChangeFinishedState(id);
 
-            return ManageNotes(!Boolean.Parse(showFinished), sortParam);
+                return ManageNotes(!Boolean.Parse(showFinished), sortParam);
+            }
+            catch
+            {
+                return RedirectToAction("ErrorBadRequest", "Error");
+            }
         }
 
         private int GetCurrentUserId()

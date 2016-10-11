@@ -61,9 +61,10 @@ namespace NotePro.Services
         public void ChangeFinishedState(long id)
         {
             Note note = mContext.Notes.Where(x => x.Id == id).FirstOrDefault();
+
             if(note==null)
             {
-                //TODO: throw 404 error
+                throw new Exception("note not found.");
             }
             else if (note.Finished == true)
             {
@@ -75,6 +76,7 @@ namespace NotePro.Services
                 note.Finished = true;
                 note.FinishDate = DateTime.Now;
             }
+
             mContext.Update(note);
             mContext.SaveChanges();
         }
@@ -82,9 +84,10 @@ namespace NotePro.Services
         public Note GetNote(long id)
         {
             Note note = mContext.Notes.Where(x => x.Id == id).FirstOrDefault();
+
             if(note==null)
             {
-                //TODO: throw 404 error
+                throw new Exception("note not found.");
             }
             return note;
         }

@@ -1,14 +1,16 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NotePro.Models;
 
 namespace UnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class NoteController
     {
         [TestMethod]
-        public void TestMethod1()
+        public void GetNote_NoteNotFound_ThrowException()
         {
+            Note note = mNoteService.GetNote(id);
         }
     }
 }
